@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link href="./bootstrap/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="./bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="./bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome.css" rel="stylesheet">
+    <script src="./jquery/jquery-3.2.1.min.js"></script>
+    <script src="./bootstrap/js/bootstrap.js"></script>
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <title>联系我</title>
+    <script type="text/javascript">
+        var code ;
+        function checkMobile(){
+            var number=document.getElementsByName("number").value;
+            var reg0=/^13\d{5,9}$/;   //130--139。至少7位
+            var reg1=/^153\d{8}$/;  //联通153。至少7位
+            var reg2=/^159\d{8}$/;  //移动159。至少7位
+            var reg3=/^158\d{8}$/;
+            var reg4=/^150\d{8}$/;
+            var reg5=/^184\d{8}$/;
+            var my=false;
+            if(reg0.test(number)){my=true;}
+            if(reg1.test(number)){my=true;}
+            if(reg2.test(number)){my=true;}
+            if(reg3.test(number)){my=true;}
+            if(reg4.test(number)){my=true;}
+            if(reg5.test(number)){my=true;}
+            if(!my){
+                alert('对不起，您输入的手机号码错误。')
+            }else{
+                alert("恭喜，输入的手机号码正确");
+            }
+        }
+        /*function CheckMail( mail )
+        {
+            var regex = /^([0-9A-Za-z\-_\.]+)@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
+            if ( regex.test( mail ) )
+            {
+
+                var user_name = email_address.replace( regex, "$1" );
+                var domain_name = email_address.replace( regex, "$2" );
+                var alert_string = "您输入的电子邮件地址合法\n\n";
+                alert_string += "用户名：" + user_name + "\n";
+                alert_string += "域名：" + domain_name;
+                window.alert( alert_string );
+                return true;
+            }
+            else
+            {
+                window.alert( "您输入的电子邮件地址不合法" );
+                return false;
+            }
+        }*/
+        function checkpasswd(){
+            var password = document.getElementsByName("password").value;
+            var confirm = document.getElementsByName("confirm").value;
+            if(password == confirm){
+                return true;
+            }else{
+                window.alert("两次输入密码不一致");
+                return false;
+            }
+        }
+        /*function myCheck()
+        {
+            for(var i=0;i<document.form1.elements.length-1;i++)
+            {
+                if(document.form1.elements[i].value=="")
+                {
+                    alert("当前表单不能有空项");
+                    document.form1.elements[i].focus();
+                    return false;
+                }
+            }
+            return true;
+
+        }*/
+        function createCode(){
+            code = new Array();
+            var codeLength = 4;//验证码的长度
+            var checkCode = document.getElementById("checkCode");
+            checkCode.value = "";
+            var selectChar = new Array(2,3,4,5,6,7,8,9,'A','B','C','D','E','F','G','H','J','K','L','M','N','P','Q','R','S','T','U','V','W','X','Y','Z');
+            for(var i=0;i<codeLength;i++) {
+                var charIndex = Math.floor(Math.random()*32);
+                code +=selectChar[charIndex];
+            }
+            if(code.length != codeLength){
+                createCode();
+            }
+            checkCode.value = code;
+        }
+        function validate () {
+            var inputCode = document.getElementById("input1").value.toUpperCase();
+            if(inputCode.length <=0) {
+                alert("请输入验证码！");
+                return false;
+            }
+            else if(inputCode != code ){
+                alert("验证码输入错误！");
+                createCode();
+                return false;
+            }
+            else {
+                alert("成功！");
+                return true;
+            }
+        }
+    </script>
+    <style>
+        .whole
+        {
+            background-color: #000000;
+        }
+        p
+        {
+            color: #fbf9ff;
+            text-align: left;
+            padding-top: 30px;
+            padding-left: 50px;
+            padding-right: 50px;
+            line-height:2;
+        }
+
+    </style>
+</head>
+<body>
+<div class="whole"><iframe name="head" width="100%" height="105" marginwidth="0" marginleft="0" src="header.html"></iframe>
+    <div>
+        <table cellpadding="0" cellspacing="0" border="0" align="center">
+            <tr>
+                <td width="43"><img src="images/left01.gif" width="43" height="968px"> </td>
+                <td width="440"  valign="top" >
+                    <table height="608" width="440" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td width="39"><img src="images/顶端条.png" width="758" height="10"></td>
+                        <tr><td height="598" valign="top" bgcolor="#000000" color="white">
+                        <form name="form1"  action="sql.php" method="post" onsubmit="return myCheck()" >
+                            <p>用户名*： <input type="text" name="name" size="12" maxlength="20" class="form-control"><br>
+                                性别*：<select name="sex" class="form-control">
+                                    <option  value=""></option>
+                                    <option  value="1">男</option>
+                                    <option  value="0">女</option>
+                                    <option  value="2">不明</option>
+                                       </select><br>
+                                输入密码*： <input type="password" name="password" size="16" maxlength="16" class="form-control" onkeyup="checkpasswd()"><br>
+                                确认密码*： <input type="password" name="confirm" size="16" maxlength="16" class="form-control" onkeyup="checkpasswd()" ><br>
+                                出生日期*：<input type="text" name="year" size="20" maxlength="10" class="form-control" ><br>
+                                E_mail： <input type="text" name="email" size="20" maxlength="24" value="" class="form-control" ><br>
+                                手机号码*：<input type="text" name="number" size="20" maxlength="11" class="form-control"  onchange="checkMobile()"><br>
+                                喜欢的性别：<label><input name="favour" type="radio" value="1"  />男</label>
+                                <label><input name="favour" type="radio" value="0" />女</label>
+                                <label><input name="favour" type="radio" value="2" />双</label>
+                                <label><input name="favour" type="radio" value="100" />其他</label><br>
+                                您的爱好：<label><input name="hobby" type="checkbox" value="俗趣1" />*</label>
+                                <label><input name="hobby" type="checkbox" value="俗趣2" />**</label>
+                                <label><input name="hobby" type="checkbox" value="俗趣3" />***</label>
+                                <label><input name="hobby" type="checkbox" value="俗趣4" />****</label> <br>
+                                <br>
+
+                            </p>
+                            <p>
+                               <span>验证码：</span><br><input type="text" id="input1" size="8" class="col-md-4">&nbsp;&nbsp;
+                                <input type="button" id="checkCode" class="code" style="width:60px;color: #000000" onClick="createCode()" /> <a href="#" onClick="createCode()" style="color: #fbf9ff"></a>
+                                <input id="Button1" onClick="validate();" type="button" value="确定"  class="btn-danger"/><br><br>
+                               <input type="submit" name="提交" value="提 交" class="btn-success">&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="reset" name="重写" value="重 写" class="btn-warning">
+
+                            </p>
+
+                        </form>
+
+                        </td></tr>
+                        </tr>
+                    </table>
+                </td>
+                <td width="43"><img src="images/right01.gif" width="43" height="968px"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
